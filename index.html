@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Darjeeling Countdown 2026</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family: 'Segoe UI', sans-serif;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    color:white;
+    text-align:center;
+    background:
+    linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.45)),
+    url("https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=2000&auto=format&fit=crop");
+    background-size:cover;
+    background-position:center;
+}
+
+.cloud{
+    position:absolute;
+    width:300px;
+    height:80px;
+    background:rgba(255,255,255,.15);
+    filter:blur(20px);
+    border-radius:50px;
+    animation:float 35s linear infinite;
+}
+
+.cloud:nth-child(1){
+    top:10%;
+    left:-350px;
+}
+
+.cloud:nth-child(2){
+    top:25%;
+    left:-500px;
+    animation-duration:45s;
+}
+
+.cloud:nth-child(3){
+    top:65%;
+    left:-400px;
+    animation-duration:55s;
+}
+
+@keyframes float{
+    from{
+        transform:translateX(0);
+    }
+    to{
+        transform:translateX(calc(100vw + 600px));
+    }
+}
+
+.container{
+    z-index:2;
+    padding:25px;
+    width:95%;
+    max-width:1000px;
+}
+
+h1{
+    font-size:clamp(2rem,5vw,4rem);
+    margin-bottom:10px;
+    text-shadow:0 3px 10px rgba(0,0,0,.5);
+}
+
+.subtitle{
+    font-size:1.1rem;
+    margin-bottom:40px;
+    opacity:.95;
+}
+
+.countdown{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:rgba(255,255,255,.12);
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:20px;
+    padding:25px 10px;
+    box-shadow:0 8px 30px rgba(0,0,0,.25);
+}
+
+.number{
+    font-size:clamp(2.5rem,6vw,4rem);
+    font-weight:700;
+}
+
+.label{
+    margin-top:8px;
+    font-size:1rem;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    opacity:.9;
+}
+
+.footer{
+    margin-top:35px;
+    font-size:1rem;
+    opacity:.9;
+}
+
+.train{
+    font-size:2rem;
+    margin-top:20px;
+    animation:trainMove 3s ease-in-out infinite;
+}
+
+@keyframes trainMove{
+    0%,100%{
+        transform:translateX(-10px);
+    }
+    50%{
+        transform:translateX(10px);
+    }
+}
+</style>
+
+</head>
+<body>
+
+<div class="cloud"></div>
+<div class="cloud"></div>
+<div class="cloud"></div>
+
+<div class="container">
+
+```
+<h1>🏔️ Darjeeling 2026</h1>
+
+<div class="subtitle">
+    NJP Station er uddeshe berote baki...
+</div>
+
+<div class="countdown">
+
+    <div class="card">
+        <div id="days" class="number">0</div>
+        <div class="label">Days</div>
+    </div>
+
+    <div class="card">
+        <div id="hours" class="number">0</div>
+        <div class="label">Hours</div>
+    </div>
+
+    <div class="card">
+        <div id="minutes" class="number">0</div>
+        <div class="label">Minutes</div>
+    </div>
+
+    <div class="card">
+        <div id="seconds" class="number">0</div>
+        <div class="label">Seconds</div>
+    </div>
+
+</div>
+
+<div class="footer">
+    🚕 26 June 2026 • 9:00 PM
+</div>
+
+<div class="train">🚂</div>
+```
+
+</div>
+
+<script>
+
+const tripDate = new Date("2026-06-26T21:00:00+05:30").getTime();
+
+function updateCountdown(){
+
+    const now = new Date().getTime();
+    const distance = tripDate - now;
+
+    if(distance <= 0){
+
+        document.body.innerHTML = `
+        <div style="
+        height:100vh;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+        text-align:center;
+        color:white;
+        background:linear-gradient(135deg,#0f172a,#1e293b);
+        ">
+            <h1 style="font-size:4rem;">🚕</h1>
+            <h2>Cholo Station!</h2>
+            <p>Darjeeling Adventure Starts Now ❤️</p>
+        </div>
+        `;
+
+        return;
+    }
+
+    const days = Math.floor(distance / (1000*60*60*24));
+    const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+    const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+    const seconds = Math.floor((distance % (1000*60)) / 1000);
+
+    document.getElementById("days").textContent = days;
+    document.getElementById("hours").textContent = hours;
+    document.getElementById("minutes").textContent = minutes;
+    document.getElementById("seconds").textContent = seconds;
+}
+
+updateCountdown();
+setInterval(updateCountdown,1000);
+
+</script>
+
+</body>
+</html>
