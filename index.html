@@ -144,7 +144,7 @@ h1{
 
     <h1>🏔️ Darjeeling 2026</h1>
 
-    <div class="subtitle">
+    <div class="subtitle" id="subtitle">
         NJP Station er uddeshe berote baki...
     </div>
 
@@ -233,9 +233,37 @@ function updateCountdown() {
 
         if (distance <= 0) {
 
-            document.querySelector(".countdown").innerHTML =
-                "<h2>🎉 Darjeeling Time! 🚂</h2>";
-
+            document.getElementById("subtitle").style.display = "none";
+        
+            document.querySelector(".countdown").innerHTML = `
+                <div style="
+                    grid-column:1/-1;
+                    text-align:center;
+                    padding:30px;
+                ">
+                    <h1 style="
+                        font-size:3rem;
+                        margin-bottom:15px;
+                    ">
+                        🎉 Time's up!
+                    </h1>
+        
+                    <p style="
+                        font-size:1.5rem;
+                        opacity:.95;
+                    ">
+                        Ebar dekha jak ke shobcheye beshi deri kore... 😆
+                    </p>
+        
+                    <div class="train" style="
+                        font-size:4rem;
+                        margin-top:25px;
+                    ">
+                        🚂
+                    </div>
+                </div>
+            `;
+        
             return;
         }
 
