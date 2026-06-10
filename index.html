@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -14,7 +13,7 @@
 }
 
 body{
-    font-family: 'Segoe UI', sans-serif;
+    font-family:'Segoe UI',sans-serif;
     min-height:100vh;
     display:flex;
     justify-content:center;
@@ -133,8 +132,8 @@ h1{
     }
 }
 </style>
-
 </head>
+
 <body>
 
 <div class="cloud"></div>
@@ -143,90 +142,127 @@ h1{
 
 <div class="container">
 
-```
-<h1>🏔️ Darjeeling 2026</h1>
+    <h1>🏔️ Darjeeling 2026</h1>
 
-<div class="subtitle">
-    NJP Station er uddeshe berote baki...
-</div>
-
-<div class="countdown">
-
-    <div class="card">
-        <div id="days" class="number">0</div>
-        <div class="label">Days</div>
+    <div class="subtitle">
+        NJP Station er uddeshe berote baki...
     </div>
 
-    <div class="card">
-        <div id="hours" class="number">0</div>
-        <div class="label">Hours</div>
+    <div class="countdown">
+
+        <div class="card">
+            <div id="days" class="number">0</div>
+            <div class="label">Days</div>
+        </div>
+
+        <div class="card">
+            <div id="hours" class="number">0</div>
+            <div class="label">Hours</div>
+        </div>
+
+        <div class="card">
+            <div id="minutes" class="number">0</div>
+            <div class="label">Minutes</div>
+        </div>
+
+        <div class="card">
+            <div id="seconds" class="number">0</div>
+            <div class="label">Seconds</div>
+        </div>
+
     </div>
 
-    <div class="card">
-        <div id="minutes" class="number">0</div>
-        <div class="label">Minutes</div>
+    <div class="footer">
+        🚕 26 June 2026 • 9:00 PM
     </div>
 
-    <div class="card">
-        <div id="seconds" class="number">0</div>
-        <div class="label">Seconds</div>
-    </div>
-
-</div>
-
-<div class="footer">
-    🚕 26 June 2026 • 9:00 PM
-</div>
-
-<div class="train">🚂</div>
-```
+    <div class="train">🚂</div>
 
 </div>
 
 <script>
 
-const tripDate = new Date("2026-06-26T21:00:00+05:30").getTime();
+const switchDate = new Date(2026, 5, 25, 0, 0, 0);
+const finalDate = new Date(2026, 5, 26, 21, 0, 0);
 
-function updateCountdown(){
+function updateCountdown() {
 
-    const now = new Date().getTime();
-    const distance = tripDate - now;
+    const now = new Date();
 
-    if(distance <= 0){
+    // BEFORE 25 JUNE
+    if (now < switchDate) {
 
-        document.body.innerHTML = `
-        <div style="
-        height:100vh;
-        display:flex;
-        flex-direction:column;
-        justify-content:center;
-        align-items:center;
-        text-align:center;
-        color:white;
-        background:linear-gradient(135deg,#0f172a,#1e293b);
-        ">
-            <h1 style="font-size:4rem;">🚕</h1>
-            <h2>Cholo Station!</h2>
-            <p>Darjeeling Adventure Starts Now ❤️</p>
-        </div>
-        `;
+        document.getElementById("days").parentElement.style.display = "";
 
-        return;
+        const distance = switchDate - now;
+
+        const days = Math.floor(
+            distance / (1000 * 60 * 60 * 24) + 2
+        );
+
+        const hours = Math.floor(
+            (distance % (1000 * 60 * 60 * 24)) /
+            (1000 * 60 * 60)
+        );
+
+        const minutes = Math.floor(
+            (distance % (1000 * 60 * 60)) /
+            (1000 * 60)
+        );
+
+        const seconds = Math.floor(
+            (distance % (1000 * 60)) /
+            1000
+        );
+
+        document.getElementById("days").textContent = days;
+        document.getElementById("hours").textContent = hours;
+        document.getElementById("minutes").textContent =
+            String(minutes).padStart(2, "0");
+        document.getElementById("seconds").textContent =
+            String(seconds).padStart(2, "0");
+
     }
 
-    const days = Math.floor(distance / (1000*60*60*24));
-    const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
-    const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
-    const seconds = Math.floor((distance % (1000*60)) / 1000);
+    // 25 JUNE → 26 JUNE 9 PM
+    else {
 
-    document.getElementById("days").textContent = days;
-    document.getElementById("hours").textContent = hours;
-    document.getElementById("minutes").textContent = minutes;
-    document.getElementById("seconds").textContent = seconds;
+        document.getElementById("days").parentElement.style.display = "none";
+
+        const distance = finalDate - now;
+
+        if (distance <= 0) {
+
+            document.querySelector(".countdown").innerHTML =
+                "<h2>🎉 Darjeeling Time! 🚂</h2>";
+
+            return;
+        }
+
+        const hours = Math.floor(
+            distance / (1000 * 60 * 60)
+        );
+
+        const minutes = Math.floor(
+            (distance % (1000 * 60 * 60)) /
+            (1000 * 60)
+        );
+
+        const seconds = Math.floor(
+            (distance % (1000 * 60)) /
+            1000
+        );
+
+        document.getElementById("hours").textContent = hours;
+        document.getElementById("minutes").textContent =
+            String(minutes).padStart(2, "0");
+        document.getElementById("seconds").textContent =
+            String(seconds).padStart(2, "0");
+    }
 }
 
 updateCountdown();
-setInterval(updateCountdown,1000);
+setInterval(updateCountdown, 1000);
 
 </script>
 
